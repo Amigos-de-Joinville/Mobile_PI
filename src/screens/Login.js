@@ -1,46 +1,41 @@
 import React, { useState } from "react";
 import { View, StyleSheet, ScrollView, Text, Image } from "react-native";
 import { Button, TextInput } from "react-native-paper";
-
-// import * as SecureStore from 'expo-secure-store';
-// import { useSetRecoilState } from 'recoil';
-
-// import loginApi from '../services/login';
-// import { userState } from '../recoil/atoms/auth';
-
-// export default function Login({ navigation }) {
-//   const [username, setUsername] = useState('');
-//   const [password, setPassword] = useState('');
-//   const [errorMsg, setErrorMsg] = useState(null);
-
-//   const setUser = useSetRecoilState(userState);
-
-//   const login = async () => {
-//     try {
-//       const data = await loginApi.login(username, password);
-//       setUser({
-//         loggedIn: true,
-//         access: data.access,
-//         refresh: data.refresh,
-//       });
-//       setUsername('');
-//       setPassword('');
-//       setErrorMsg(null);
-//       await SecureStore.setItemAsync('access', data.access);
-//       navigation.goBack();
-//     } catch (error) {
-//       setUser({ loggedIn: false, access: null, refresh: null });
-//       setErrorMsg('Usuário ou senha inválidos!');
-//       await SecureStore.deleteItemAsync('access');
-//     }
-//   };
-// }
-
-
+import * as SecureStore from 'expo-secure-store';
+import { useSetRecoilState } from 'recoil';
+import loginApi from '../services/login';
+import { userState } from '../recoil/atoms/auth';
 const logo = require("../images/pi.png");
 
-const MyComponent = ({ navigation }) => {
-  const [viewPassword, setViewPassword] = React.useState(false);
+export default function Login({ navigation }) {
+  const [viewPassword, setViewPassword] = React.useState(false)
+  const [username, setUsername] = useState('aninha');
+  const [password, setPassword] = useState('minhasenha1');
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  const setUser = useSetRecoilState(userState);
+
+  const login = async () => {
+    try {
+      const data = await loginApi.login(username, password);
+      setUser({
+        loggedIn: true,
+        access: data.access,
+        refresh: data.refresh,
+      });
+      setUsername('');
+      setPassword('');
+      setErrorMsg(null);
+      await SecureStore.setItemAsync('access', data.access);
+      navigation.goBack();
+    } catch (error) {
+      setUser({ loggedIn: false, access: null, refresh: null });
+      setErrorMsg('Usuário ou senha inválidos!');
+      await SecureStore.deleteItemAsync('access');
+    }
+  };
+
+
   return (
     <View style={styles.containerStyle}>
       <ScrollView contentContainerStyle={styles.scrollViewStyle}>
@@ -48,15 +43,19 @@ const MyComponent = ({ navigation }) => {
         <Text style={styles.headingStyle}>Entrar </Text>
         <TextInput
           style={styles.input}
-          label="Email"
+          label="Usuário"
+          value={username}
+          onChangeText={setUsername}
           mode="outlined"
           outlineColor="#F7559A"
           activeOutlineColor="#F7559A"
-          placeholder="amigosdejoinville@gmail.com"
+          placeholder="phelipemoser_"
         />
         <TextInput
           style={styles.input}
           label="Senha"
+          value={password}
+          onChangeText={setPassword}
           mode="outlined"
           outlineColor="#F7559A"
           activeOutlineColor="#F7559A"
@@ -79,8 +78,7 @@ const MyComponent = ({ navigation }) => {
       </ScrollView>
     </View>
   );
-};
-
+}
 const styles = StyleSheet.create({
   containerStyle: {
     flex: 1,
@@ -116,4 +114,3 @@ const styles = StyleSheet.create({
 });
 
 
-export default MyComponent;
