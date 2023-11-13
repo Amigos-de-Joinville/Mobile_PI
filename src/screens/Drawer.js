@@ -7,6 +7,7 @@ import Home from "../screens/Home";
 import ListaAnimais from "../screens/ListAnimais";
 import Perfil from "../screens/Perfil";
 import Sobre from "../screens/Sobre";
+import Cadastrar from "../screens/Cadastrar";
 
 const Drawer = createDrawerNavigator();
 function MyDrawer() {
@@ -35,12 +36,7 @@ function MyDrawer() {
         initialParams={{ especie: "Gato" }}
         options={{ drawerLabel: "Gatos", drawerActiveTintColor: "#F7559A" }}
       />
-      {/* <Drawer.Screen
-        name="Passaros"
-        component={ListaAnimais}
-        initialParams={{especie: 'passaro'}}
-        options={{ drawerLabel: "Passaros", drawerActiveTintColor: "#F7559A" }}
-      /> */}
+
       <Drawer.Screen
         name="Perfil"
         component={Perfil}
@@ -52,6 +48,12 @@ function MyDrawer() {
         component={Sobre}
         options={{ drawerLabel: "Sobre", drawerActiveTintColor: "#F7559A" }}
       />
+       <Drawer.Screen
+        name="Cadastrar"
+        icon="folder"
+        component={Cadastrar}
+        options={{ drawerLabel: "Cadastrar", drawerActiveTintColor: "#F7559A" }}
+      />
     </Drawer.Navigator>
   );
 }
@@ -61,15 +63,6 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  // titulo: {
-  //   backgroundColor: '#FA497A',
-  //   textAlign: 'center',
-  //   padding: 15,
-  //   color: 'white',
-  //   marginBottom: 160,
-  //   ustifyContent: 'center',
-  //   alignItems: 'center',
-  // },
   drawer: {
     backgroundColor: "pink",
   },
