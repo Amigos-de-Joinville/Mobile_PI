@@ -6,8 +6,8 @@ class AnimalService {
     return response.data
   }
   async saveAnimal(Animal, image) {
-    Animal.especie = [Animal.especie]
-    Animal.capa_attachment_key = image.attachment_key
+    // Animal.especie = [Animal.especie]
+    Animal.foto_attachment_key = image.attachment_key
     console.log(Animal)
     const response = await api.post('/animais/', Animal)
     return response.data

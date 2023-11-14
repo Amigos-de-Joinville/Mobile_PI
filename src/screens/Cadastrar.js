@@ -23,9 +23,9 @@ export default function AnimalAdd({ navigation }) {
   const [animal, setAnimal] = useState({
     nome: "",
     descricao: "",
-    especie: [],
-    raca: [],
-    cor: [],
+    especie: '',
+    raca: '',
+    cor: '',
 
   });
 
@@ -66,16 +66,17 @@ export default function AnimalAdd({ navigation }) {
   
   
   const save = async () => {
+    console.log('salvando...');
     const image = await imageService.uploadImage(file);
-    setAnimal((animal) => ({
-      ...animal,
-      capa_attachment_key: image.attachment_key,
-    }));
+    // setAnimal((animal) => ({
+    //   ...animal,
+    //   capa_attachment_key: image.attachment_key,
+    // }));
 
     console.log(animal);
 
     const data = await animalService.saveAnimal(animal, image);
-    navigation.goBack();
+    // navigation.goBack();
   };
 
   const pickImageAsync = async () => {
@@ -156,7 +157,7 @@ export default function AnimalAdd({ navigation }) {
           selectedTextStyle={styles.selectedTextStyle}
           data={especies}
           maxHeight={300}
-          labelField="nome"
+          labelField="descricao"
           valueField="id"
           placeholder={isFocus ? "..." : "Selecione a espécie"}
           value={animal.especie}
@@ -228,7 +229,7 @@ export default function AnimalAdd({ navigation }) {
           selectedTextStyle={styles.selectedTextStyle}
           data={cores}
           maxHeight={300}
-          labelField="nome"
+          labelField="descricao"
           valueField="id"
           placeholder={isFocus ? "..." : "Selecione a cor"}
           value={animal.cor}
