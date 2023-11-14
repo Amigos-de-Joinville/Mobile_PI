@@ -45,7 +45,7 @@ function ListAnimais({ route, navigation }) {
   return (
     <ScrollView style={styles.scroll}>
       <View style={styles.container}>
-        <Text style={styles.texto}> Se encante e adotex!</Text>
+        <Text style={styles.texto}> Se encante e adote!!!!</Text>
         <View style={styles.conteudo}>
           {filtrados.map((animal) => (
             <MyComponent
