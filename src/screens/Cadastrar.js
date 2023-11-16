@@ -3,6 +3,8 @@ import * as ImagePicker from "expo-image-picker";
 import { StyleSheet, Image, View, ScrollView } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import { Dropdown } from "react-native-element-dropdown";
+import ModalConfirmation from "../components/ModalConfirmation";
+
 
 import { useTheme } from "react-native-paper";
 
@@ -12,8 +14,14 @@ import especieService from "../services/especies";
 import racaService from "../services/racas";
 import corService from "../services/cores";
 
-
 export default function AnimalAdd({ navigation }) {
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+  
   const theme = useTheme();
 
   const [isFocus, setIsFocus] = useState(false);
@@ -23,10 +31,9 @@ export default function AnimalAdd({ navigation }) {
   const [animal, setAnimal] = useState({
     nome: "",
     descricao: "",
-    especie: '',
-    raca: '',
-    cor: '',
-
+    especie: "",
+    raca: "",
+    cor: "",
   });
 
   const [especies, setEspecies] = useState([]);
@@ -62,11 +69,8 @@ export default function AnimalAdd({ navigation }) {
     getCores();
   }, []);
 
-
-  
-  
   const save = async () => {
-    console.log('salvando...');
+    console.log("salvando...");
     const image = await imageService.uploadImage(file);
     // setAnimal((animal) => ({
     //   ...animal,
@@ -89,7 +93,7 @@ export default function AnimalAdd({ navigation }) {
       setSelectedImage(result.assets[0].uri);
       setFile(result.assets[0]);
     } else {
-      alert("You did not select any image.");
+      alert("Você não selecionou nenhuma imagem");
     }
   };
 
@@ -103,9 +107,13 @@ export default function AnimalAdd({ navigation }) {
         />
       )}
       {!selectedImage && (
-        <View style={styles.buttons}>
-          <Button backgroundColor="#F7559A" mode="contained" onPress={pickImageAsync}>
-            Selecionar imagem
+        <View>
+          <Button
+            style={styles.buttons}
+            mode={"contained"}
+            onPress={pickImageAsync}
+          >
+            Selecionar foto
           </Button>
         </View>
       )}
@@ -120,7 +128,7 @@ export default function AnimalAdd({ navigation }) {
             setAnimal((animal) => ({ ...animal, nome: text }))
           }
         />
-         <TextInput
+        <TextInput
           label="Descricao"
           style={{ marginBottom: 10 }}
           mode="outlined"
@@ -131,32 +139,15 @@ export default function AnimalAdd({ navigation }) {
           }
         />
         <Dropdown
-          style={[
-            styles.dropdown,
-            {
-              backgroundColor: theme.colors.surfaceVariant,
-            },
-            isFocus && {
-              borderBottomColor: "#F7559A",
-              borderBottomWidth: 1.5,
-            },
-          ]}
-           mode="outlined"
-    
-          containerStyle={[
-            {
-              backgroundColor: theme.colors.surfaceVariant,
-            },
-          ]}
+          style={[styles.dropdown, isFocus && { borderColor: "#F7559A" }]}
           placeholderStyle={styles.placeholderStyle}
-          itemContainerStyle={[
-            {
-              backgroundColor: theme.colors.surfaceVariant,
-            },
-          ]}
           selectedTextStyle={styles.selectedTextStyle}
-          data={especies}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          search
+          activeColor="#f7d5e3"
           maxHeight={300}
+          data={especies}
           labelField="descricao"
           valueField="id"
           placeholder={isFocus ? "..." : "Selecione a espécie"}
@@ -169,30 +160,17 @@ export default function AnimalAdd({ navigation }) {
           }}
         />
         <Dropdown
-          style={[
-            styles.dropdown,
-            {
-              backgroundColor: theme.colors.surfaceVariant,
-            },
-            isFocus && {
-              borderBottomColor: "#F7559A",
-              borderBottomWidth: 1.5,
-            },
-          ]}
-          containerStyle={[
-            {
-              backgroundColor: theme.colors.surfaceVariant,
-            },
-          ]}
+          style={[styles.dropdown, isFocus && { borderColor: "#F7559A" }]}
           placeholderStyle={styles.placeholderStyle}
-          itemContainerStyle={[
-            {
-              backgroundColor: theme.colors.surfaceVariant,
-            },
-          ]}
           selectedTextStyle={styles.selectedTextStyle}
-          data={racas}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          search
+          activeColor="#f7d5e3"
+          outlineColor="#F7559A"
+          activeOutlineColor="#F7559A"
           maxHeight={300}
+          data={racas}
           labelField="nome"
           valueField="id"
           placeholder={isFocus ? "..." : "Selecione a raça"}
@@ -204,29 +182,14 @@ export default function AnimalAdd({ navigation }) {
             setIsFocus(false);
           }}
         />
-         <Dropdown
-          style={[
-            styles.dropdown,
-            {
-              backgroundColor: theme.colors.surfaceVariant,
-            },
-            isFocus && {
-              borderBottomColor: theme.colors.primary,
-              borderBottomWidth: 1.5,
-            },
-          ]}
-          containerStyle={[
-            {
-              backgroundColor: theme.colors.surfaceVariant,
-            },
-          ]}
+        <Dropdown
+          style={[styles.dropdown, isFocus && { borderColor: "#F7559A" }]}
           placeholderStyle={styles.placeholderStyle}
-          itemContainerStyle={[
-            {
-              backgroundColor: theme.colors.surfaceVariant,
-            },
-          ]}
           selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          search
+          activeColor="#f7d5e3"
           data={cores}
           maxHeight={300}
           labelField="descricao"
@@ -240,13 +203,19 @@ export default function AnimalAdd({ navigation }) {
             setIsFocus(false);
           }}
         />
-       
-        
       </View>
-      <View style={styles.buttons}>
-        <Button mode="contained" onPress={save}>
+      <View>
+      <Button style={styles.buttons} mode={"contained"} onPress={openModal}>
+        Adicionar
+      </Button>
+      <ModalConfirmation
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onConfirm={save}
+      />
+        {/* <Button style={styles.buttons} mode={"contained"} onPress={save}>
           Adicionar
-        </Button>
+        </Button> */}
       </View>
     </ScrollView>
   );
@@ -264,13 +233,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginBottom: 20,
   },
-  dropdown: {
-    height: 55,
-    borderBottomColor: "#F7559A",
-    borderBottomWidth: 0.8,
-    borderTopRadius: 4,
-    paddingHorizontal: 8,
-  },
+
   placeholderStyle: {
     fontSize: 14,
     color: "#000a",
@@ -287,6 +250,41 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     marginTop: 20,
     marginBottom: 20,
-    color: "#F7559A",
+    backgroundColor: "#F7559A",
+    width: 150,
+    marginLeft:110,
+    textColor: "white",
+  },
+  dropdown: {
+    height: 50,
+    borderColor: "#F7559A",
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    marginTop: 10,
+  },
+
+  label: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    left: 22,
+    top: 8,
+    zIndex: 999,
+    paddingHorizontal: 8,
+    fontSize: 14,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
   },
 });
