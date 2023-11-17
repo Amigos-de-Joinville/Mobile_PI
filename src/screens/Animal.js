@@ -28,7 +28,7 @@ function DetailAnimal({ route, navigation }) {
   });
 
   useEffect(() => {
-    axios.get(`https://django-pi-j444-dev.fl0.io/animais/${id}`).then((response) => {
+    axios.get(`https://django-pi-dev-rxrf.4.us-1.fl0.io/api/animais/${id}`).then((response) => {
       setAnimal(response.data);
     });
   }, []);

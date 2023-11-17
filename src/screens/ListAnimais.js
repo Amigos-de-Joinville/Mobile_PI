@@ -33,7 +33,7 @@ function ListAnimais({ route, navigation }) {
   const [filtrados, setFiltrados] = useState([]);
 
   useEffect(() => {
-    axios.get("https://django-pi-j444-dev.fl0.io/animais/").then((response) => {
+    axios.get("https://django-pi-dev-rxrf.4.us-1.fl0.io/api/animais/").then((response) => {
       setData(response.data);
       const novosFiltrados = animais.filter(
         (animal) => animal.especie === especie
@@ -45,7 +45,7 @@ function ListAnimais({ route, navigation }) {
   return (
     <ScrollView style={styles.scroll}>
       <View style={styles.container}>
-        <Text style={styles.texto}> Se encante e adote!</Text>
+        <Text style={styles.texto}> Se encante e adote!!!</Text>
         <View style={styles.conteudo}>
           {filtrados.map((animal) => (
             <MyComponent
