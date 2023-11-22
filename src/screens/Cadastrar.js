@@ -213,9 +213,6 @@ export default function AnimalAdd({ navigation }) {
         onClose={() => setModalVisible(false)}
         onConfirm={save}
       />
-        {/* <Button style={styles.buttons} mode={"contained"} onPress={save}>
-          Adicionar
-        </Button> */}
       </View>
     </ScrollView>
   );
