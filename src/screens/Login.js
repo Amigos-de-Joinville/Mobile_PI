@@ -3,13 +3,16 @@ import { View, StyleSheet, ScrollView, Text, Image } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import * as SecureStore from 'expo-secure-store';
 import { useSetRecoilState } from 'recoil';
+import {RecoilRoot} from 'recoil';
+
 import loginApi from '../services/login';
 import { userState } from '../recoil/atoms/auth';
+
 const logo = require("../images/pi.png");
 
 export default function Login({ navigation }) {
   const [viewPassword, setViewPassword] = React.useState(false)
-  const [username, setUsername] = useState('aninha');
+  const [email, setEmail] = useState('aninha');
   const [password, setPassword] = useState('minhasenha1');
   const [errorMsg, setErrorMsg] = useState(null);
 
@@ -17,13 +20,13 @@ export default function Login({ navigation }) {
 
   const login = async () => {
     try {
-      const data = await loginApi.login(username, password);
+      const data = await loginApi.login(email, password);
       setUser({
         loggedIn: true,
         access: data.access,
         refresh: data.refresh,
       });
-      setUsername('');
+      setEmail('');
       setPassword('');
       setErrorMsg(null);
       await SecureStore.setItemAsync('access', data.access);
@@ -37,19 +40,21 @@ export default function Login({ navigation }) {
 
 
   return (
+    
     <View style={styles.containerStyle}>
       <ScrollView contentContainerStyle={styles.scrollViewStyle}>
         <Image style={styles.logo} source={logo} />
         <Text style={styles.headingStyle}>Entrar </Text>
+        <RecoilRoot>
         <TextInput
           style={styles.input}
-          label="Usuário"
-          value={username}
-          onChangeText={setUsername}
+          label="Email"
+          value={email}
+          onChangeText={setEmail}
           mode="outlined"
           outlineColor="#F7559A"
           activeOutlineColor="#F7559A"
-          placeholder="phelipemoser_"
+          placeholder="teste@gmail.com"
         />
         <TextInput
           style={styles.input}
@@ -71,10 +76,12 @@ export default function Login({ navigation }) {
         <Button
           style={styles.buttonforms}
           mode={"contained"}
-          onPress={() => navigation.navigate("Main")}
+          onPress={() => login()}
         >
           Log In
         </Button>
+        <Text>{errorMsg}</Text>
+        </RecoilRoot>
       </ScrollView>
     </View>
   );

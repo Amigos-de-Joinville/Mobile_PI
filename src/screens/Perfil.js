@@ -212,7 +212,6 @@ const styles = StyleSheet.create({
   },
   optionName: {
     marginLeft: 25,
-    color: "#",
     fontSize: 15,
   },
 });
