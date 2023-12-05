@@ -5,7 +5,6 @@ import { Button, TextInput } from "react-native-paper";
 import { Dropdown } from "react-native-element-dropdown";
 import ModalConfirmation from "../components/ModalConfirmation";
 
-
 import { useTheme } from "react-native-paper";
 
 import imageService from "../services/images";
@@ -15,13 +14,12 @@ import racaService from "../services/racas";
 import corService from "../services/cores";
 
 export default function AnimalAdd({ navigation }) {
-
   const [modalVisible, setModalVisible] = useState(false);
 
   const openModal = () => {
     setModalVisible(true);
   };
-  
+
   const theme = useTheme();
 
   const [isFocus, setIsFocus] = useState(false);
@@ -77,7 +75,7 @@ export default function AnimalAdd({ navigation }) {
     //   capa_attachment_key: image.attachment_key,
     // }));
 
-    console.log(animal);
+    console.log(image);
 
     const data = await animalService.saveAnimal(animal, image);
     // navigation.goBack();
@@ -205,14 +203,14 @@ export default function AnimalAdd({ navigation }) {
         />
       </View>
       <View>
-      <Button style={styles.buttons} mode={"contained"} onPress={openModal}>
-        Adicionar
-      </Button>
-      <ModalConfirmation
-        visible={modalVisible}
-        onClose={() => setModalVisible(false)}
-        onConfirm={save}
-      />
+        <Button style={styles.buttons} mode={"contained"} onPress={openModal}>
+          Adicionar
+        </Button>
+        <ModalConfirmation
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
+          onConfirm={save}
+        />
       </View>
     </ScrollView>
   );
@@ -249,7 +247,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     backgroundColor: "#F7559A",
     width: 150,
-    marginLeft:110,
+    marginLeft: 110,
     textColor: "white",
   },
   dropdown: {
@@ -262,8 +260,8 @@ const styles = StyleSheet.create({
   },
 
   label: {
-    position: 'absolute',
-    backgroundColor: 'white',
+    position: "absolute",
+    backgroundColor: "white",
     left: 22,
     top: 8,
     zIndex: 999,
