@@ -10,7 +10,7 @@ import Sobre from "../screens/Sobre";
 import Cadastrar from "../screens/Cadastrar";
 
 const Drawer = createDrawerNavigator();
-function MyDrawer() {
+export default function MyDrawer() {
   return (
     <Drawer.Navigator useLegacyImplementation initialRouteName="Home">
       <Drawer.Screen
@@ -42,13 +42,13 @@ function MyDrawer() {
         component={Perfil}
         options={{ drawerLabel: "Perfil", drawerActiveTintColor: "#F7559A" }}
       />
-       <Drawer.Screen
+      <Drawer.Screen
         name="Sobre"
         icon="folder"
         component={Sobre}
         options={{ drawerLabel: "Sobre", drawerActiveTintColor: "#F7559A" }}
       />
-       <Drawer.Screen
+      <Drawer.Screen
         name="Cadastrar"
         icon="folder"
         component={Cadastrar}
@@ -56,10 +56,6 @@ function MyDrawer() {
       />
     </Drawer.Navigator>
   );
-}
-
-export default function App() {
-  return <MyDrawer />;
 }
 
 const styles = StyleSheet.create({

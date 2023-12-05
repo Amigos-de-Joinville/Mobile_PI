@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Text, View, StyleSheet, ScrollView } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  RefreshControl,
+} from "react-native";
 import { Card, Avatar, Title } from "react-native-paper";
 import "react-native-gesture-handler";
 import Button from "../components/Button";
@@ -27,23 +33,47 @@ const MyComponent = (props) => (
 );
 
 function ListAnimais({ route, navigation }) {
+  const [refreshing, setRefreshing] = React.useState(false);
+
   const { especie } = route.params;
 
   const [animais, setData] = useState([]);
   const [filtrados, setFiltrados] = useState([]);
 
-  useEffect(() => {
-    axios.get("https://django-pi-dev-rxrf.4.us-1.fl0.io/api/animais/").then((response) => {
+  const fetchAnimais = async () => {
+    console.log(especie);
+    try {
+      const response = await axios.get(
+        "https://django-pi-dev-rxrf.4.us-1.fl0.io/api/animais/"
+      );
       setData(response.data);
-      const novosFiltrados = animais.filter(
+      const novosFiltrados = response.data.filter(
         (animal) => animal.especie === especie
       );
+      console.log(novosFiltrados);
       setFiltrados(novosFiltrados);
-    });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onRefresh = React.useCallback(async () => {
+    setRefreshing(true);
+    await fetchAnimais();
+    setRefreshing(false);
+  }, []);
+
+  useEffect(() => {
+    fetchAnimais();
   }, []);
 
   return (
-    <ScrollView style={styles.scroll}>
+    <ScrollView
+      style={styles.scroll}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
       <View style={styles.container}>
         <Text style={styles.texto}> Se encante e adote!</Text>
         <View style={styles.conteudo}>

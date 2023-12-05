@@ -1,19 +1,14 @@
 import "react-native-gesture-handler";
 import * as React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Appbar } from "react-native-paper";
+
 import { NavigationContainer } from "@react-navigation/native";
-// import { createDrawerNavigator } from '@react-navigation/drawer';
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-// import Drawer from "./components/Drawer";
-// import Tab from "./components/Tab"
 
 import Main from "./src/screens/Main";
 import Login from "./src/screens/Login";
 import DetailAnimal from "./src/screens/Animal";
 
-import { ScrollView } from "react-native-gesture-handler";
 import { RecoilRoot } from "recoil";
 
 const Stack = createStackNavigator();
